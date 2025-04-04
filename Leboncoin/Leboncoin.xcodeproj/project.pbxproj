@@ -34,11 +34,15 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Enums/ViewState.swift,
+				"Extensions/AdFullModel+Testing.swift",
+				"Extensions/Image+Extension.swift",
+				GlobalConstants.swift,
 				Network/Models/AdFullModel.swift,
 				Network/Models/CategoryModel.swift,
 				Network/NetworkAPI.swift,
 				Network/NetworkError.swift,
 				Network/NetworkManager.swift,
+				Scenes/Home/AdListView.swift,
 				Scenes/Home/HomeView.swift,
 				Scenes/Home/HomeViewModel.swift,
 			);
