@@ -8,11 +8,11 @@
 import Foundation
 
 protocol NetworkAPIFacade {
-    func fetch(_ request: URLRequest) async throws -> Data
+    func fetch(_ url: URL) async throws -> Data
 }
 
 final class NetworkAPI: NetworkAPIFacade {
-    func fetch(_ request: URLRequest) async throws -> Data {
-        try await URLSession.shared.data(for: request).0
+    func fetch(_ url: URL) async throws -> Data {
+        try await URLSession.shared.data(from: url).0
     }
 }

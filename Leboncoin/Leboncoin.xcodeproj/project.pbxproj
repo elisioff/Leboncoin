@@ -33,10 +33,14 @@
 		313231702D9FD25700C781C0 /* Exceptions for "Leboncoin" folder in "LeboncoinTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Enums/ViewState.swift,
 				Network/Models/AdFullModel.swift,
+				Network/Models/CategoryModel.swift,
 				Network/NetworkAPI.swift,
 				Network/NetworkError.swift,
 				Network/NetworkManager.swift,
+				Scenes/Home/HomeView.swift,
+				Scenes/Home/HomeViewModel.swift,
 			);
 			target = 3132314A2D9FD08E00C781C0 /* LeboncoinTests */;
 		};

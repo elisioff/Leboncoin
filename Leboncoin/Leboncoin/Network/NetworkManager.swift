@@ -9,7 +9,8 @@ import OSLog
 import UIKit
 
 protocol NetworkManagerProtocol {
-    func fetchAdds() async throws -> [AdFullModel]
+    func fetchAllAds() async throws -> [AdFullModel]
+    func fetchAllCategories() async throws -> [CategoryModel]
     func fetchImageWith(url urlString: String) async throws -> UIImage
 }
 
@@ -20,15 +21,34 @@ final class NetworkManager: NetworkManagerProtocol {
     }
 
     private var images: [String: UIImage] = [:]
+    private var networkAPI: NetworkAPIFacade
 
-    func fetchAdds() async throws -> [AdFullModel] {
+    init(networkAPI: NetworkAPIFacade) {
+        self.networkAPI = networkAPI
+    }
+
+    func fetchAllAds() async throws -> [AdFullModel] {
         guard let url = URL(string: Constants.adsURL) else { throw NetworkError.invalidUrlString }
 
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+
         do {
-            let data = try await URLSession.shared.data(from: url).0
-            return try JSONDecoder().decode([AdFullModel].self, from: data)
+            let data = try await networkAPI.fetch(url)
+
+            return try jsonDecoder.decode([AdFullModel].self, from: data)
         } catch {
             throw NetworkError.invalidData
+        }
+    }
+
+    func fetchAllCategories() async throws -> [CategoryModel] {
+        guard let url = URL(string: Constants.categoriesURL) else { throw NetworkError.invalidUrlString }
+
+        do {
+            let data = try await networkAPI.fetch(url)
+
+            return try JSONDecoder().decode([CategoryModel].self, from: data)
         }
     }
 
@@ -44,7 +64,8 @@ final class NetworkManager: NetworkManagerProtocol {
         Logger().info("🏞️ RequestURL: \(urlString)")
 
         do {
-            let imageData = try await URLSession.shared.data(from: url).0
+            let imageData = try await networkAPI.fetch(url)
+            
             if let uiImage = UIImage(data: imageData) {
                 images[urlString] = uiImage
                 return uiImage
