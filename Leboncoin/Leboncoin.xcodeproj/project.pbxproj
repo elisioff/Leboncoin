@@ -34,6 +34,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Network/Models/AdFullModel.swift,
+				Network/NetworkAPI.swift,
+				Network/NetworkError.swift,
+				Network/NetworkManager.swift,
 			);
 			target = 3132314A2D9FD08E00C781C0 /* LeboncoinTests */;
 		};
