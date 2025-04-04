@@ -14,6 +14,7 @@ protocol HomeViewModelProtocol: ObservableObject {
 
     func initialTask() async
     func fetchImageWith(url: String) async -> UIImage?
+    func category(with id: Int) -> String?
 }
 
 // MARK: ViewModel
@@ -43,6 +44,10 @@ extension HomeViewModel {
         } catch {
             return nil
         }
+    }
+
+    func category(with id: Int) -> String? {
+        self.categories[id]
     }
 }
 

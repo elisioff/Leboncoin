@@ -6,6 +6,7 @@
 //
 
 import OSLog
+import SwiftUI
 import UIKit
 
 protocol NetworkManagerProtocol {
@@ -14,7 +15,7 @@ protocol NetworkManagerProtocol {
     func fetchImageWith(url urlString: String) async throws -> UIImage
 }
 
-final class NetworkManager: NetworkManagerProtocol {
+final actor NetworkManager: NetworkManagerProtocol {
     private enum Constants {
         static let adsURL = "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json"
         static let categoriesURL = "https://raw.githubusercontent.com/leboncoin/paperclip/master/categories.json"

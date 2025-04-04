@@ -22,8 +22,15 @@ struct HomeView<ViewModel: HomeViewModelProtocol>: View {
 
             case .loaded:
                 List(viewModel.ads, id: \.id) { ad in
-                    Text(ad.title)
+                    NavigationLink {
+                        Text(ad.title)
+                    } label: {
+                        AdListView(ad: ad,
+                                   category: viewModel.category(with: ad.categoryId),
+                                   fetchImage: viewModel.fetchImageWith)
+                    }
                 }
+                .listStyle(.plain)
 
             case .loadedNoItems:
                 Text("No Data Available")

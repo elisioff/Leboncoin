@@ -11,13 +11,15 @@ import SwiftUI
 struct LeboncoinApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView(
-                viewModel: HomeViewModel(
-                    networkManager: NetworkManager(
-                        networkAPI: NetworkAPI()
+            NavigationStack {
+                HomeView(
+                    viewModel: HomeViewModel(
+                        networkManager: NetworkManager(
+                            networkAPI: NetworkAPI()
+                        )
                     )
                 )
-            )
+            }
         }
     }
 }

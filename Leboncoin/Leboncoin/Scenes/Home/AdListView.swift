@@ -16,36 +16,39 @@ struct AdListView: View {
 
     var body: some View {
         VStack {
-            GeometryReader { geometry in
-                Group {
-                    if let image {
-                        image
-                            .resizable()
-                    } else {
-                        Image.placeholder
-                    }
+            Group {
+                if let image {
+                    image
+                        .resizable()
+                } else {
+                    Image.placeholder
                 }
-                .scaledToFit()
-                .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.width / 2)
-                .clipped()
             }
+            .scaledToFit()
+            .frame(idealWidth: 200, idealHeight: 200)
 
             VStack(alignment: .leading) {
                 HStack  {
-                    Text(category ?? "")
-                        .padding(7)
-                        .foregroundStyle(.white)
-                        .background(Capsule().fill(.indigo))
+                    if let category {
+                        Text(category)
+                            .padding(7)
+                            .foregroundStyle(.white)
+                            .background(Capsule().fill(.indigo))
+                    }
 
-                    Text("Urgent")
-                        .padding(7)
-                        .foregroundStyle(.white)
-                        .background(Capsule().fill(.red))
+                    if ad.isUrgent {
+                        Text("Urgent")
+                            .padding(7)
+                            .foregroundStyle(.white)
+                            .background(Capsule().fill(.red))
+                    }
                 }
+                .font(.caption)
                 .bold()
 
                 Text(ad.title)
-                    .font(.title)
+                    .lineLimit(2)
+                    .font(.headline)
                     .bold()
 
                 Text(ad.price.formatted(.currency(code: "eur")))
@@ -54,14 +57,9 @@ struct AdListView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background {
-            RoundedRectangle(cornerRadius: GlobalConstants.cornerRadius)
-                .fill(.background)
-                .shadow(radius: 5)
-        }
         .task {
             guard let url = ad.imagesUrl.small,
-                    let uiImage = await fetchImage(url) else { return }
+                  let uiImage = await fetchImage(url) else { return }
 
             await MainActor.run {
                 image = Image(uiImage: uiImage)
@@ -72,8 +70,8 @@ struct AdListView: View {
 
 #Preview {
     AdListView(ad: AdFullModel.sampleNotUrgent,
-                category: "Cars",
-                fetchImage: { url in
+               category: "Books",
+               fetchImage: { url in
         guard let url = URL(string: url) else { return nil }
 
         do {
