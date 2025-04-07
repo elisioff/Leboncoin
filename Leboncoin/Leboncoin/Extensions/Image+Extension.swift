@@ -8,12 +8,8 @@
 import SwiftUI
 
 extension Image {
-    private enum Constants {
-        static let placeholderImageName: String = "cart"
-    }
-    
     static var placeholder: some View {
-        Image(systemName: Constants.placeholderImageName)
+        Image(systemName: GlobalConstants.placeholderImageName)
             .resizable()
     }
 }

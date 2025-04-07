@@ -22,9 +22,7 @@ struct HomeView<ViewModel: HomeViewModelProtocol>: View {
 
             case .loaded:
                 List(viewModel.ads, id: \.id) { ad in
-                    NavigationLink {
-                        Text(ad.title)
-                    } label: {
+                    NavigationLink(value: ad) {
                         AdListView(ad: ad,
                                    category: viewModel.category(with: ad.categoryId),
                                    fetchImage: viewModel.fetchImageWith)
@@ -35,6 +33,9 @@ struct HomeView<ViewModel: HomeViewModelProtocol>: View {
             case .loadedNoItems:
                 Text("No Data Available")
             }
+        }
+        .navigationDestination(for: AdFullModel.self) { ad in
+            AdDetailViewRepresentable(viewModel: viewModel.detailViewModel(for: ad))
         }
         .task {
             await viewModel.initialTask()

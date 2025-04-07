@@ -15,6 +15,7 @@ protocol HomeViewModelProtocol: ObservableObject {
     func initialTask() async
     func fetchImageWith(url: String) async -> UIImage?
     func category(with id: Int) -> String?
+    func detailViewModel(for: any AdSimpleModel) -> (any AdDetailViewModelProtocol)?
 }
 
 // MARK: ViewModel
@@ -48,6 +49,17 @@ extension HomeViewModel {
 
     func category(with id: Int) -> String? {
         self.categories[id]
+    }
+
+    func detailViewModel(for ad: any AdSimpleModel) -> (any AdDetailViewModelProtocol)? {
+        if let fullAd = ad as? AdFullModel,
+           let category = categories[ad.categoryId] {
+            return AdDetailViewModel(ad: fullAd,
+                                     category: category,
+                                     networkManager: networkManager)
+        }
+
+        return nil
     }
 }
 

@@ -9,6 +9,7 @@ import Combine
 import UIKit
 
 protocol AdDetailViewModelProtocol: ObservableObject {
+    var ad: AdFullModel { get }
     var observableImage: Published<UIImage?>.Publisher { get }
 
     func adDetails() -> [AttributedString]
@@ -16,8 +17,9 @@ protocol AdDetailViewModelProtocol: ObservableObject {
 
 final class AdDetailViewModel: AdDetailViewModelProtocol {
     var observableImage: Published<UIImage?>.Publisher { $image }
-    @Published var image: UIImage?
-    private var ad: AdFullModel
+    @Published var image: UIImage? = nil
+
+    private(set) var ad: AdFullModel
     private var category: String
     private let networkManager: NetworkManagerProtocol
 
@@ -27,6 +29,7 @@ final class AdDetailViewModel: AdDetailViewModelProtocol {
         self.ad = ad
         self.category = category
         self.networkManager = networkManager
+        self.fetchImage()
     }
 }
 
@@ -35,19 +38,13 @@ extension AdDetailViewModel {
     func adDetails() -> [AttributedString] {
         var result: [AttributedString?] = []
 
-        if ad.isUrgent {
-            var isUrgent = AttributedString("Urgent")
-            isUrgent.font = .bold(.body)()
-            isUrgent.foregroundColor = .red
-            result.append(isUrgent)
-        }
+        result.append(try? AttributedString(markdown: "**\(category)**"))
 
         var title = AttributedString("\(ad.title)")
-        title.font = .headline
+        title.font = .systemFont(ofSize: 30)
         result.append(title)
 
         result.append(AttributedString(ad.description))
-        result.append(try? AttributedString(markdown: "**\(category)**"))
 
         // ID & Data
         result.append(AttributedString("Id: \(ad.id)"))
@@ -55,8 +52,8 @@ extension AdDetailViewModel {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
-        if let date = dateFormatter.date(from: ad.creationDate) {
-            result.append(try? AttributedString(markdown: "**Created:** \(date)"))
+        if let date = dateFormatter.date(from: ad.creationDate)?.formatted(date: .abbreviated, time: .shortened) {
+            result.append(AttributedString("Created: \(date)"))
         }
 
         return result.compactMap(\.self)

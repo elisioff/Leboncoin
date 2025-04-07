@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol AdSimpleModel: Identifiable {
+protocol AdSimpleModel: Identifiable, Hashable {
     var id: Int { get }
     var imagesUrl: ImageModel { get }
     var categoryId: Int { get }
@@ -28,7 +28,7 @@ struct AdFullModel: Decodable, AdSimpleModel {
     let siret: String?
 }
 
-struct ImageModel: Decodable {
+struct ImageModel: Decodable, Hashable {
     let small: String?
     let thumb: String?
 }

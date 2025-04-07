@@ -9,4 +9,5 @@ import Foundation
 
 enum GlobalConstants {
     static let cornerRadius: CGFloat = 12
+    static let placeholderImageName = "cart"
 }

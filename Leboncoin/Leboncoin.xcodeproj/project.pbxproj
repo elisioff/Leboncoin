@@ -45,6 +45,7 @@
 				Scenes/Detail/AdDetailView.swift,
 				Scenes/Detail/AdDetailViewController.swift,
 				Scenes/Detail/AdDetailViewModel.swift,
+				Scenes/Detail/AdDetailViewRepresentable.swift,
 				Scenes/Home/AdListView.swift,
 				Scenes/Home/HomeView.swift,
 				Scenes/Home/HomeViewModel.swift,
