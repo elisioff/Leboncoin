@@ -12,7 +12,7 @@ extension AdFullModel {
         .init(
             id: 1701990485,
             title: "Livre - Artemis Fowl, Book 1",
-            categoryId: 7,
+            categoryId: 1,
             creationDate: "2019-11-05T20:00:43+0000",
             description: "Vends livre Artemis Fowl: Artemis Fowl, Book 1 de Eoin Colfer. - Tres bon etat - Edition reliee - ASIN: B01DKX3H7G",
             isUrgent: false,
@@ -26,7 +26,7 @@ extension AdFullModel {
         .init(
             id: 1,
             title: "Renault Twingo",
-            categoryId: 0,
+            categoryId: 2,
             creationDate: "2019-11-05T19:00:43+0000",
             description: "A brand new car",
             isUrgent: true,

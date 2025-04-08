@@ -9,6 +9,7 @@ import Foundation
 
 enum NetworkError: Error {
     case noAds
+    case noCategories
     case noImage
     case invalidUrlString
     case invalidData

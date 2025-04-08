@@ -11,6 +11,8 @@ import UIKit
 protocol HomeViewModelProtocol: ObservableObject {
     var viewState: ViewState { get }
     var ads: [any AdSimpleModel] { get }
+    var categories: [Int: String] { get }
+
 
     func initialTask() async
     func fetchImageWith(url: String) async -> UIImage?
@@ -22,9 +24,9 @@ protocol HomeViewModelProtocol: ObservableObject {
 final class HomeViewModel: HomeViewModelProtocol {
     @Published private(set) var viewState: ViewState = .idle
     @Published private(set) var ads: [any AdSimpleModel] = []
-    
+    private(set) var categories: [Int: String] = [:]
+
     private var networkManager: NetworkManagerProtocol
-    private var categories: [Int: String] = [:]
 
     init(networkManager: NetworkManagerProtocol) {
         self.networkManager = networkManager
@@ -76,8 +78,9 @@ private extension HomeViewModel {
 
             let result = try await (categoriesResult, adsResult)
 
-            guard result.0.count > .zero,
-                  result.1.count > .zero else { throw NetworkError.invalidData }
+            guard result.0.count > .zero else { throw NetworkError.noCategories }
+
+            guard result.1.count > .zero else { throw NetworkError.noAds }
 
             self.updateCategories(result.0)
 
