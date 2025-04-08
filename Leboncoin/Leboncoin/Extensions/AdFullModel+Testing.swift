@@ -35,4 +35,8 @@ extension AdFullModel {
             siret: nil
         )
     }
+
+    static var sampleArray: [Self] {
+        [.sampleUrgent, .sampleNotUrgent]
+    }
 }

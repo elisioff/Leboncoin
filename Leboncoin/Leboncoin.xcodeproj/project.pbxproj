@@ -35,6 +35,7 @@
 			membershipExceptions = (
 				Enums/ViewState.swift,
 				"Extensions/AdFullModel+Testing.swift",
+				"Extensions/CategoryModel+Testing.swift",
 				"Extensions/Image+Extension.swift",
 				GlobalConstants.swift,
 				Network/Models/AdFullModel.swift,
