@@ -33,14 +33,14 @@ struct AdListView: View {
                         Text(category)
                             .padding(7)
                             .foregroundStyle(.white)
-                            .background(Capsule().fill(.indigo))
+                            .background(RoundedRectangle(cornerRadius: GlobalConstants.cornerRadius).fill(.indigo))
                     }
 
                     if ad.isUrgent {
                         Text("Urgent")
                             .padding(7)
                             .foregroundStyle(.white)
-                            .background(Capsule().fill(.red))
+                            .background(RoundedRectangle(cornerRadius: GlobalConstants.cornerRadius).fill(.red))
                     }
                 }
                 .font(.caption)
